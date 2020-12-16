@@ -5,9 +5,9 @@ import Data.List
 -- 1
 
 enumFromTo' :: Int -> Int -> [Int]
-enumFromTo' start end 
+enumFromTo' start end
     | start > end = []
-    | otherwise = start:enumFromTo (start+1) end
+    | otherwise = start:enumFromTo' (start+1) end
 
 enumFromToScary :: Int -> Int -> [Int]
 enumFromToScary = curry (uncurry (flip takeWhile) . split (iterate (+1) . fst) ((>=) . snd))
@@ -53,12 +53,12 @@ reverse_mini = foldl (flip (:)) []
 take' :: Int -> [a] -> [a]
 take' 0 _ = []
 take' _ [] = []
-take' n (h:t) 
+take' n (h:t)
     | n < 0 = []
     | otherwise = h : take' (n - 1) t
 
 take_fold :: Int -> [a] -> [a]
-take_fold n = foldl (\acc x -> if length acc < n then acc ++ [x] else acc) [] 
+take_fold n = foldl (\acc x -> if length acc < n then acc ++ [x] else acc) []
 
 -- 7
 
@@ -107,7 +107,7 @@ replicate'' = flip $ flip take . repeat
 intersperse' :: a -> [a] -> [a]
 intersperse' _ [] = []
 intersperse' _ [h] = [h]
-intersperse' x (h:t) = h:x:intersperse' x t 
+intersperse' x (h:t) = h:x:intersperse' x t
 
 -- 12
 
@@ -136,7 +136,7 @@ concat'_mini = foldr (++) []
 
 inits' :: [a] -> [[a]]
 inits' [] = [[]]
-inits' l = inits' (init l) ++ [l] 
+inits' l = inits' (init l) ++ [l]
 
 inits'' :: [a] -> [[a]]
 inits'' [x] = [[],[x]]
@@ -261,7 +261,7 @@ pMaior' :: Ord a => [a] -> Int
 pMaior' (h:t) = aux 0 0 h t
     where aux _ nm _ [] = nm
           aux n nm x (l:ls) = if l > x -- n é o índice "atual", nm é o índice do valor máximo da lista
-                              then aux (n + 1) (n + 1) l ls 
+                              then aux (n + 1) (n + 1) l ls
                               else aux (n + 1) nm x ls
 
 -- 29
@@ -413,7 +413,7 @@ partitionEithers' [] = ([],[])
 partitionEithers' ((Left a):t) = (a:as,bs)
     where (as,bs) = partitionEithers' t
 partitionEithers' ((Right b):t) = (as,b:bs)
-    where (as,bs) = partitionEithers' t  
+    where (as,bs) = partitionEithers' t
 
 -- 43
 
@@ -473,8 +473,8 @@ vizinhos (Pos x y) = filter (\(Pos a b) -> abs (a - x) + abs (b - y) == 1)
 
 vizinhos' :: Posicao -> [Posicao] -> [Posicao]
 vizinhos' _ [] = []
-vizinhos' (Pos x y) ((Pos xv yv):ps) = if abs (x - xv) == 1 && y == yv || abs (y - yv) == 1 && x == xv 
-                                       then Pos xv yv : vizinhos' (Pos x y) ps 
+vizinhos' (Pos x y) ((Pos xv yv):ps) = if abs (x - xv) == 1 && y == yv || abs (y - yv) == 1 && x == xv
+                                       then Pos xv yv : vizinhos' (Pos x y) ps
                                        else vizinhos' (Pos x y) ps
 
 -- 49
@@ -486,7 +486,7 @@ mesmaOrdenada ((Pos _ y):(Pos x2 y2):ps) = y == y2 && mesmaOrdenada (Pos x2 y2 :
 
 mesmaOrdenada' :: [Posicao] -> Bool
 mesmaOrdenada' [] = True
-mesmaOrdenada' (Pos _ y:t) = all ((==) y . (\(Pos _ yy) -> yy)) t 
+mesmaOrdenada' (Pos _ y:t) = all ((==) y . (\(Pos _ yy) -> yy)) t
 
 -- 50
 
