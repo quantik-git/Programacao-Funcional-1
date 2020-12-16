@@ -1,14 +1,37 @@
 data BTree a = Empty | Node a (BTree a) (BTree a) deriving Show
 
 arvore1 = (Node 5 (Node 2 (Node 1 Empty
-                                  Empty) 
-                          (Node 3 Empty 
-                                  Empty)) 
-                  (Node 9 (Node 7 (Node 6 Empty 
-                                          Empty) 
-                                  (Node 8 Empty 
-                                          Empty)) 
+                                  Empty)
+                          (Node 3 Empty
+                                  Empty))
+                  (Node 9 (Node 7 (Node 6 Empty
+                                          Empty)
+                                  (Node 8 Empty
+                                          Empty))
                           Empty))
+
+freeBTree =   
+  Node 'P'
+      (Node 'O'
+          (Node 'L'
+              (Node 'N' Empty Empty)
+              (Node 'T' Empty Empty)
+          )
+          (Node 'Y'
+              (Node 'S' Empty Empty)
+              (Node 'A' Empty Empty)
+          )
+      )
+      (Node 'L'
+          (Node 'W'
+              (Node 'C' Empty Empty)
+              (Node 'R' Empty Empty)
+          )
+          (Node 'A'
+              (Node 'A' Empty Empty)
+              (Node 'C' Empty Empty)
+          )
+      )
 
 -- Exercicio 1
 
@@ -33,7 +56,7 @@ prune x (Node e l r) = Node e (prune (x - 1) l) (prune (x - 1) r)
 path :: [Bool] -> BTree a -> [a]
 path _ Empty = []
 path [] (Node e l r) = [e]
-path (h:t) (Node e l r) = e : path t (if h then r else l)  
+path (h:t) (Node e l r) = e : path t (if h then r else l)
 
 mirror :: BTree a -> BTree a
 mirror Empty = Empty
@@ -85,7 +108,7 @@ type Turma = BTree Aluno  --  árvore binária de procura (ordenada por número)
 
 turma1 :: Turma
 turma1 = (Node (15,"Luís",ORD,Aprov 14) (Node (12,"Joana",MEL,Faltou) (Node (7,"Diogo",TE,Rep) Empty
-                                                                                               Empty) 
+                                                                                               Empty)
                                                                       (Node (14,"Lara",ORD,Aprov 19) Empty
                                                                                                      Empty))
                                         (Node (20,"Pedro",TE,Aprov 10) Empty

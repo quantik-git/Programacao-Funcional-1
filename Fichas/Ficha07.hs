@@ -6,6 +6,8 @@ data ExpInt = Const Int
             | Menos ExpInt ExpInt
             | Mult ExpInt ExpInt
 
+--let expInt = (Mais (Const 2) (Simetrico (Mais (Const 4)(Const 3))))
+
 calcula :: ExpInt -> Int
 calcula (Const num) = num
 calcula (Simetrico exp) = (- calcula exp)
@@ -70,7 +72,7 @@ ltree1 = Fork (Fork (Tip 5)
 
 ltSum :: Num a => LTree a -> a
 ltSum (Tip n) = n
-ltSum (Fork a b) = ltSum a + ltSum b 
+ltSum (Fork a b) = ltSum a + ltSum b
 
 listaLT :: LTree a -> [a]
 listaLT (Tip n) = [n]

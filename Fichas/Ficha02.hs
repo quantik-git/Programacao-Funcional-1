@@ -6,8 +6,8 @@ import Data.List (partition)
 
 {-
 
-a) funA [2,3,5,1] = funA (2:[3,5,1]) = 2^2 + funA [3,5,1] = 
-    = 4 + funA (3:[5,1]) = 4 + 3^2 + funA [5,1] = 13 + funA (5:[1]) = 
+a) funA [2,3,5,1] = funA (2:[3,5,1]) = 2^2 + funA [3,5,1] =
+    = 4 + funA (3:[5,1]) = 4 + 3^2 + funA [5,1] = 13 + funA (5:[1]) =
     = 13 + 5^2 + funA [1] =  38 + funA (1:[]) = 38 + 1^2 + funA [] = 39 + 0 = 39
 
 b) funB [8,5,12] = funB (8:[5,12]) = 8:funB [5,12] = 8:funB (5:[12]) =
@@ -17,7 +17,7 @@ c) funC [1,2,3,4,5] = funC (1:2:[3,4,5]) = funC [3,4,5] = funC (3:4:[5]) =
     = funC [5] = []
 
 d) funD "otrec" = g [] "otrec" = g [] 'o':"trec" = g 'o':[] "trec" = g ['o'] 't':"rec" =
-    = g 't':['o'] "rec" = g "to" 'r':"ec" = g 'r':"to" "ec" = g "rto" 'e':['c'] = 
+    = g 't':['o'] "rec" = g "to" 'r':"ec" = g 'r':"to" "ec" = g "rto" 'e':['c'] =
     = g 'e':"rto" ['c'] = g "erto" 'c':[] = g 'c':"erto" [] = "certo"
 
 -}
@@ -42,13 +42,13 @@ positivos' :: [Int] -> Bool
 positivos' = all (>=0)
 
 soPos :: [Int] -> [Int]
-soPos [n] 
+soPos [n]
     | n < 0 = []
     | otherwise = [n]
 soPos (n:ns)
     | n < 0 = soPos ns
     | otherwise = n:soPos ns
-soPos' ns = fst (partition (>0) ns) 
+soPos' ns = fst (partition (>0) ns)
 
 somaNeg :: [Int] -> Int
 somaNeg l = case l of [n] -> if n < 0 then n else 0
@@ -108,7 +108,7 @@ minusculas :: [Char] -> Int
 minusculas [] = 0
 minusculas (c:str) = if c `elem` ['a'..'z'] then 1 + minusculas str
                                             else minusculas str
-                                            
+
 minusculas' :: [Char] -> Int
 minusculas' = foldl (\acc x -> if x `elem` ['a'..'z'] then acc + 1 else acc) 0
 
@@ -118,13 +118,15 @@ nums' str = [ord num - ord '0' | num <- str, num `elem` ['0'..'9']]
 -- Forma recursiva:
 nums :: [Char] -> [Int]
 nums [] = []
-nums (c:str) = if c `elem` ['0'..'9'] then (ord c - ord '0') : nums str 
+nums (c:str) = if c `elem` ['0'..'9'] then (ord c - ord '0') : nums str
                                       else nums str
 
 -- Exercício 4
 
 type Polinomio = [Monomio]
 type Monomio = (Float,Int)
+
+-- pol = [(2,3), (3,4), (5,3), (4,5)]
 
 conta :: Int -> Polinomio -> Int
 -- ASSIM: OU conta n p = length selgrau n p
@@ -177,7 +179,7 @@ soma p1 p2 = normaliza (p1 ++ p2)
 
 produto :: Polinomio -> Polinomio -> Polinomio
 produto [] _ = []
-produto (p:p1) p2 = soma (mult p p2) (produto p1 p2) 
+produto (p:p1) p2 = soma (mult p p2) (produto p1 p2)
 
 ordena :: Polinomio -> Polinomio -- Esta função deu-me cabo da cabeça, foda-se, tive que ir online ver como se fazia quicksort no haskell, e é fácil pra caraças, mas eu sou deficiente e não consegui chegar a esta merda facílima sozinha!
 ordena [] = []
@@ -186,7 +188,7 @@ ordena ((b,e):ps) = ordena (maisAltos ps) ++ [(b,e)] ++ ordena (maisBaixos ps)
           maisAltos ((bx,ex):xs) = if ex > e || (ex == e && bx >= b) then (bx,ex):maisAltos xs else maisAltos xs
           maisBaixos [] = []
           maisBaixos ((bx,ex):xs) = if ex < e || (ex == e && bx < b) then (bx,ex):maisBaixos xs else maisBaixos xs
-{- 
+{-
 ordena ((b,e):ps) = monomiosMaisAltos ++ [(b,e)] ++ monomiosMaisBaixos
         where monomiosMaisAltos = ordena [mm | mm@(bm,em) <- ps, (em > e || (em == e && bm >= b))]
               monomiosMaisBaixos = ordena [mm | mm@(bm,em) <- ps, (em < e || (em == e && bm < b))]
@@ -194,4 +196,3 @@ ordena ((b,e):ps) = monomiosMaisAltos ++ [(b,e)] ++ monomiosMaisBaixos
 
 equiv :: Polinomio -> Polinomio -> Bool
 equiv p1 p2 = ordena (normaliza p1) == ordena (normaliza p2)
-

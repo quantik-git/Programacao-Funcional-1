@@ -30,7 +30,7 @@ digitAlpha string = foldl (\(alpha,digit) x -> if isDigit x then (alpha,digit ++
 nzp :: [Int] -> (Int,Int,Int)
 nzp = foldl (\(n,z,p) x -> if x < 0 then (n+1,z,p) else if x > 0 then (n,z,p+1) else (n,z+1,p)) (0,0,0)
 
--- Exercicio 5 
+-- Exercicio 5
 
 divMod :: Integral a => a -> a -> (a, a)
 divMod x y = foldl (\(a,b) n -> (a+1,b-y)) (0,x) [y,2*y..x]
@@ -40,6 +40,16 @@ divMod x y = foldl (\(a,b) n -> (a+1,b-y)) (0,x) [y,2*y..x]
 fromDigits :: [Int] -> Int
 fromDigits = foldl (\acc x -> x + 10 * acc ) 0
 
+-- Exercicio 7
+
+maxSumInit :: (Num a, Ord a) => [a] -> a
+maxSumInit (x:xs) = if x > 0 then aux x x xs else aux 0 x xs
+  where
+    aux maximo _ [] = maximo
+    aux maximo acc (y:ys) = if acc+y > maximo
+      then aux (acc+y) (acc+y) ys
+      else aux maximo (acc+y) ys
+
 -- Exercicio 8
 
 fib :: Int -> Int
@@ -47,4 +57,4 @@ fib 0 = 0
 fib 1 = 1
 fib n = fib (n-1) + fib (n-2)
 
-fib' 
+fib'

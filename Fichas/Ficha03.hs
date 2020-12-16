@@ -3,6 +3,7 @@ module Ficha03 where
 import Ficha01 as F1
 
 -- Exercício 1
+--array de testes [(H 9 30, H 10 25), (H 11 20, H 12 45), (H 13 30, H 14 45)]
 
 -- data Hora = H Int Int deriving Show
 
@@ -25,7 +26,7 @@ viagemBemConstruida ((h1,h2):(h3,h4):et) = etapaBemConstruida (h1,h2) && etapaBe
 partidaEChegada :: Viagem -> (F1.Hora,F1.Hora)
 partidaEChegada [(h1,h2)] = (h1,h2)
 partidaEChegada [(h1,h2),(h3,h4)] = (h1,h4)
-partidaEChegada ((h1,h2):(h3,h4):et) = partidaEChegada ((h1,h2):et) 
+partidaEChegada ((h1,h2):(h3,h4):et) = partidaEChegada ((h1,h2):et)
 
 -- d)
 
@@ -45,6 +46,7 @@ tempoTotalViagem :: Viagem -> Hora
 tempoTotalViagem v = addmins' (tempoDeViagem v) (hor2min' (tempoDeEspera v))
 
 -- Exercício 2
+-- teste [(Cartesiano 2 (-3)), (Cartesiano 4 5), (Cartesiano 3 (-4))]
 
 type Poligonal = [F1.Ponto]
 
@@ -85,6 +87,7 @@ zoom z (p1@(Cartesiano x y):p2@(Cartesiano a b):pol) = p1:zoom z (p3:pol)
     where p3 = (Cartesiano (z*a) (z*b))
 
 -- Exercício 3
+-- Testes [("ze", [Tlm 987654321, Casa 987654321, Email "teste@teste.com"]), ("David", [Tlm 987654321, Casa 987654321])]
 
 data Contacto = Casa Integer | Trab Integer | Tlm Integer | Email String deriving Show
 
@@ -108,18 +111,19 @@ consTelefs :: [Contacto] -> [Integer]
 consTelefs [] = []
 consTelefs (c:cs) = case c of Casa x -> x:consTelefs cs
                               Trab x -> x:consTelefs cs
-                              Tlm x -> x:consTelefs cs 
+                              Tlm x -> x:consTelefs cs
                               otherwise -> consTelefs cs
 
 -- d)
 
 casa :: Nome -> Agenda -> Maybe Integer
 casa nome [(n,(c:cs))] = if nome == n then case c of Casa x -> Just x
-                                                     otherwise -> casa nome [(n,cs)] 
+                                                     otherwise -> casa nome [(n,cs)]
                                       else Nothing
 casa nome ((n,c):agenda) = if nome == n then casa nome [(n,c)] else casa nome agenda
 
 -- Exercicio 4
+-- [("Nome", D 31 1 1000), ("Nomi", D 31 1 1001), ("Nomo", D 31 1 1020), ("Nomu", D 31 1 1100)]
 
 type Dia = Int
 type Mes = Int
@@ -137,11 +141,11 @@ procura nome ((n,d):ts) = if nome == n then Just d else procura nome ts
 
 idade :: Data -> Nome -> TabDN -> Maybe Int
 idade (dat@(D dx mx ax)) nome ((n,D d m a):ts) = if nome == n then if mx > m || mx == m && dx > d then Just (ax - a) else Just ((ax - a) - 1) else idade dat nome ts
-                                                                                                 
+
 -- c)
 
 anterior :: Data -> Data -> Bool
-anterior (D d m a) (D d2 m2 a2) = a < a2 || (a == a2 && (m < m2 || (m == m2 && d < d2))) 
+anterior (D d m a) (D d2 m2 a2) = a < a2 || (a == a2 && (m < m2 || (m == m2 && d < d2)))
 
 -- d)
 
